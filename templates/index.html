@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html><head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FB Video Downloader</title>
+<style>
+body{font-family:sans-serif;max-width:480px;margin:30px auto;padding:0 16px;text-align:center}
+input,button{width:100%;padding:14px;margin:8px 0;font-size:16px;box-sizing:border-box}
+button{background:#1877f2;color:#fff;border:0;border-radius:8px}
+img{max-width:100%;border-radius:8px}
+</style></head><body>
+<h2>Facebook Video Downloader</h2>
+<input id="u" placeholder="Facebook video link paste karein">
+<button onclick="go()">Get Video</button>
+<p id="m"></p><div id="r"></div>
+<script>
+async function go(){
+ m.textContent="Wait...";r.innerHTML="";
+ const x=await fetch("/api/info",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url:u.value})});
+ const d=await x.json();
+ if(d.error){m.textContent=d.error;return}
+ m.textContent=d.title||"";
+ r.innerHTML='<img src="'+d.thumbnail+'"><a href="'+d.url+'" target="_blank"><button>Download</button></a>';
+}
+</script></body></html>
